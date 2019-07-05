@@ -61,4 +61,15 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>deployRelease</id>
+            <url>http://maven.eju-inc.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deploySnapshot</id>
+            <url>http://maven.eju-inc.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
