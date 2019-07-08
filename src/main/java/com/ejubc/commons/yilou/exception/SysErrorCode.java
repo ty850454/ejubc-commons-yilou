@@ -18,7 +18,7 @@ public enum SysErrorCode implements IErrorCode {
     SYS0001(SYSTEM, "0001", "产生系统错误，错误码：{0}"),
 
     SYS0010(SYSTEM, "0010", "远程服务[{0}]异常，code：{1},msg：{2}"),
-    SYS0011(SYSTEM, "0011", "远程服务[{0}]连接失败，服务不可用"),
+    SYS0011(SYSTEM, "0011", "抱歉，{0}服务不可用"),
 
     SYS0020(SYSTEM, "0020", "实体拷贝异常"),
 
