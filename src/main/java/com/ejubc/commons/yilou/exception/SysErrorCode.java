@@ -13,7 +13,7 @@ import static com.ejubc.commons.yilou.exception.ErrorScope.SYSTEM;
  */
 @Getter
 public enum SysErrorCode implements IErrorCode {
-    /** 0000-999 系统异常 */
+    /** 000-999 系统异常 */
     SYS0000(SYSTEM, "0000", "产生系统错误"),
     SYS0001(SYSTEM, "0001", "产生系统错误，错误码：{0}"),
 
