@@ -88,7 +88,11 @@ public class YlExceptionHandler {
         } else {
             log.info("业务异常: {}，URL：{}", e.getMessage(), request.getRequestURI());
         }
-        ApiResponse apiResponse = buildingResponseErrorCodeEnum(codeEnum, e.getMessage(), params);
+        String detail = e.getDetail();
+        if (detail == null) {
+            detail = e.getMessage();
+        }
+        ApiResponse apiResponse = buildingResponseErrorCodeEnum(codeEnum, detail, params);
         apiResponse.setResponseCode(e.getCodeEnum().getCode());
         return apiResponse;
     }

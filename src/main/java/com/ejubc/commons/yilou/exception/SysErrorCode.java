@@ -13,7 +13,7 @@ import static com.ejubc.commons.yilou.exception.ErrorScope.SYSTEM;
  */
 @Getter
 public enum SysErrorCode implements IErrorCode {
-    /** 000-999 系统异常 */
+    /** 0000-0999 系统异常 */
     SYS0000(SYSTEM, "0000", "产生系统错误"),
     SYS0001(SYSTEM, "0001", "产生系统错误，错误码：{0}"),
 
@@ -24,15 +24,18 @@ public enum SysErrorCode implements IErrorCode {
 
     SYS0030(SYSTEM, "0030", "上传文件过大"),
 
-    /** 1000-1999 通用参数异常（非业务参数异常） */
+    /** 1000-1999 参数异常（非业务参数异常） */
     SYS1000("1000","参数[{0}]不能为空"),
 
+    /** 2000-2999 用户异常 */
+    SYS2000("2000","用户不存在"),
 
 
 
 
 
 
+    SYS9999("9999","{0}"),
     ;
     private static final String CODE_PREFIX = "SYS-";
 
