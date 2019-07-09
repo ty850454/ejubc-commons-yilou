@@ -35,6 +35,7 @@ public class ExcelUtil {
      * @param sources 源数据，需要导出的字段加{@link ExcelColumn}注解
      * @param <T> 类型
      */
+    @SuppressWarnings("unused")
     public static <T> void outputToStream(String sheetName, OutputStream os, List<T> sources) {
 
         if (sources == null || sources.size() == 0 || sources.get(0) == null) {

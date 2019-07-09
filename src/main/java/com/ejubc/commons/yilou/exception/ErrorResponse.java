@@ -10,6 +10,7 @@ import lombok.Setter;
  *
  * @author xy
  */
+@SuppressWarnings("WeakerAccess")
 @Getter
 @Setter
 public class ErrorResponse<T> extends ApiResponse<T> {

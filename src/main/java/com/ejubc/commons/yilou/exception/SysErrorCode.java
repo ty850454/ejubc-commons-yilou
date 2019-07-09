@@ -6,7 +6,7 @@ import static com.ejubc.commons.yilou.exception.ErrorScope.SYSTEM;
 
 /**
  * <p>易楼项目异常码枚举</p>
- * <p>如果在配置中心xx-bc-xx.properties文件中配置了对应的code，则将配置中心里的msg返回给用户({@link YlExceptionHandler#handleMgtException(HttpServletRequest, HttpServletResponse, MgtException)}中控制)</p>
+ * <p>如果在配置中心xx-bc-xx.properties文件中配置了对应的code，则将配置中心里的msg返回给用户</p>
  * <p>日志输出不会取配置中心的msg</p>
  *
  * @author xy

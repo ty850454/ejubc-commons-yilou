@@ -32,8 +32,6 @@ public class YlExceptionHandler {
 
     /**
      * 处理spring mvc 入参绑定异常
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(BindException.class)
@@ -44,8 +42,6 @@ public class YlExceptionHandler {
 
     /**
      * 处理方法参数无效异常
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -56,9 +52,6 @@ public class YlExceptionHandler {
 
     /**
      * 处理mgt自定义异常
-     * @param request
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(YlCloudException.class)
@@ -69,10 +62,6 @@ public class YlExceptionHandler {
 
     /**
      * 处理mgt自定义异常
-     * @param request
-     * @param response
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(YlException.class)
@@ -99,20 +88,15 @@ public class YlExceptionHandler {
 
     /**
      * 处理超过最大上传大小的异常
-     * @param e
-     * @return
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseBody
-    public ApiResponse handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e){
+    public ApiResponse handleMaxUploadSizeExceededException(){
         return ErrorResponse.failure(SysErrorCode.SYS0030);
     }
 
     /**
      * 处理其它异常
-     * @param request
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(Exception.class)
@@ -124,9 +108,6 @@ public class YlExceptionHandler {
 
     /**
      * 处理易居sdk中定义的异常（原封不动输出）
-     * @param request
-     * @param e
-     * @return
      */
     @ResponseBody
     @ExceptionHandler(BusinessException.class)

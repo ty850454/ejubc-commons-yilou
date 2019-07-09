@@ -7,7 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * excel列定义
+ * @author xy
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -36,6 +36,7 @@ public class YlException extends RuntimeException {
      * @param codeEnum 异常枚举
      * @param params 可选的参数
      */
+    @SuppressWarnings("unused")
     public YlException(String detail, IErrorCode codeEnum, Object... params) {
         super(ErrorCodeUtil.getMsgWithParams(codeEnum, params));
         this.codeEnum = codeEnum;
