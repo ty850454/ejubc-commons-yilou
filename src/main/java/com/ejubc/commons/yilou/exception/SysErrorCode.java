@@ -35,9 +35,9 @@ public enum SysErrorCode implements IErrorCode {
 
 
 
-    SYS9999("9999","{0}"),
+    SYS9999("SYS9999","{0}"),
     ;
-    private static final String CODE_PREFIX = "SYS-";
+    private static final String CODE_PREFIX = "SYS";
 
     SysErrorCode(ErrorScope scope, String code, String msg) {
         this.scope = scope;
