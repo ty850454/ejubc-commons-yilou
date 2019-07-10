@@ -40,37 +40,37 @@ public class DateUtil {
     }
 
     /** 增加指定天 */
-    public static Date addDays(Date date, int days) {
+    public static Date plusDays(Date date, int days) {
         return toDate(toLocalDateTime(date).plusDays(days));
     }
 
     /** 增加指定小时*/
-    public static Date addHours(Date date, int hours) {
+    public static Date plusHours(Date date, int hours) {
         return toDate(toLocalDateTime(date).plusHours(hours));
     }
 
     /** 增加指定分钟 */
-    public static Date addMinutes(Date date, int minutes) {
+    public static Date plusMinutes(Date date, int minutes) {
         return toDate(toLocalDateTime(date).plusMinutes(minutes));
     }
 
     /** 增加指定月 */
-    public static Date addMonth(Date date, int mouth) {
+    public static Date plusMonth(Date date, int mouth) {
         return toDate(toLocalDateTime(date).plusMonths(mouth));
     }
 
     /** 增加指定秒 */
-    public static Date addSeconds(Date date, int seconds) {
+    public static Date plusSeconds(Date date, int seconds) {
         return toDate(toLocalDateTime(date).plusSeconds(seconds));
     }
 
     /** 增加指定年 */
-    public static Date addYears(Date date, int years) {
+    public static Date plusYears(Date date, int years) {
         return toDate(toLocalDateTime(date).plusYears(years));
     }
 
     /** 增加指定周 */
-    public static Date addWeeks(Date date, int weeks) {
+    public static Date plusWeeks(Date date, int weeks) {
         return toDate(toLocalDateTime(date).plusWeeks(weeks));
     }
 }
