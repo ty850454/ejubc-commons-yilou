@@ -11,6 +11,7 @@ import java.util.Date;
  * @author xy
  */
 @SuppressWarnings("unused")
+@Deprecated
 public class DateFormatUtil {
 
 
