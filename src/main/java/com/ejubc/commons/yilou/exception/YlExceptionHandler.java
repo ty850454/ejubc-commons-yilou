@@ -151,12 +151,10 @@ public class YlExceptionHandler {
                 msg = LocalStringUtils.messageFormat(msg, params);
             }
         }
-
-        if (ErrorScope.SYSTEM.equals(errorCode.getScope())) {
-            return new ErrorResponse(errorCode.getCode(), msg, detail);
-        } else {
+        if (detail == null) {
             return new ApiResponse(errorCode.getCode(), msg);
         }
+        return new ErrorResponse(errorCode.getCode(), msg, detail);
     }
 
 }
