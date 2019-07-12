@@ -1,34 +1,64 @@
 package com.ejubc.commons.yilou.utils;
 
+import com.ejubc.commons.yilou.exception.SysErrorCode;
+import com.ejubc.commons.yilou.exception.YlException;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * 日期格式化、转换、加减工具
  *
  * @author xy
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class DateUtil {
-    public static final DateUtil DATE_TIME = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    public static final DateUtil DATE = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    public static final DateUtil DATE_TIME = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"), DateType.DATE_TIME);
+    public static final DateUtil DATE = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd"), DateType.DATE);
+    public static final DateUtil DATE_CHINA = new DateUtil(DateTimeFormatter.ofPattern("yyyy年MM月dd日"), DateType.DATE);
 
     private DateTimeFormatter dateTimeFormatter;
-    private DateUtil(DateTimeFormatter dateTimeFormatter) {
+    /** 1=日期时间，2=日期，3=时间 */
+    private DateType type;
+    private DateUtil(DateTimeFormatter dateTimeFormatter, DateType type) {
         this.dateTimeFormatter = dateTimeFormatter.withZone(ZoneId.systemDefault());
+        this.type = type;
     }
 
     public String format(Date date) {
-        if (date == null) {
-            return null;
-        }
         return dateTimeFormatter.format(date.toInstant());
     }
 
-    public Date parse(String date) {
-        return toDate(LocalDateTime.parse(date, dateTimeFormatter));
+    public Optional<Date> parse(String date) {
+        try {
+            switch (type) {
+                case DATE:
+                    LocalDate localDate = LocalDate.parse(date, dateTimeFormatter);
+                    return Optional.of(toDate(localDate));
+                case DATE_TIME:
+                    LocalDateTime localDateTime = LocalDateTime.parse(date, dateTimeFormatter);
+                    return Optional.of(toDate(localDateTime));
+                default:
+            }
+            return Optional.empty();
+        } catch (DateTimeParseException e) {
+            return Optional.empty();
+        }
+    }
+
+    private enum DateType {/** 日期类型 */ DATE_TIME, DATE, TIME}
+
+    public Date parseOrElseThrow(String date) {
+        return parse(date).orElseThrow(() -> new YlException(SysErrorCode.SYS0040));
+    }
+
+    private static Date toDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
     private static Date toDate(LocalDateTime localDateTime) {

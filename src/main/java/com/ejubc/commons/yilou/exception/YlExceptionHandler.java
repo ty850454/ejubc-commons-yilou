@@ -69,18 +69,20 @@ public class YlExceptionHandler {
         IErrorCode codeEnum = e.getCodeEnum();
         Object[] params = e.getParams();
         // 系统异常打印异常栈，用户异常打印异常信息
+        String detail = e.getDetail();
         if (ErrorScope.SYSTEM.equals(codeEnum.getScope())) {
             params = new String[]{codeEnum.getCode()};
             codeEnum = SysErrorCode.SYS0001;
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             log.error("系统异常: {}，URL：{}", e.getMessage(), request.getRequestURI(), e);
+            if (detail == null) {
+                detail = e.getMessage();
+            }
         } else {
             log.info("业务异常: {}，URL：{}", e.getMessage(), request.getRequestURI());
         }
-        String detail = e.getDetail();
-        if (detail == null) {
-            detail = e.getMessage();
-        }
+
+
         ApiResponse apiResponse = buildingResponseErrorCodeEnum(codeEnum, detail, params);
         apiResponse.setResponseCode(e.getCodeEnum().getCode());
         return apiResponse;
@@ -150,7 +152,11 @@ public class YlExceptionHandler {
             }
         }
 
-        return new ErrorResponse(errorCode.getCode(), msg, detail);
+        if (ErrorScope.SYSTEM.equals(errorCode.getScope())) {
+            return new ErrorResponse(errorCode.getCode(), msg, detail);
+        } else {
+            return new ApiResponse(errorCode.getCode(), msg);
+        }
     }
 
 }

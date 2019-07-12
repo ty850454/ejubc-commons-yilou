@@ -15,9 +15,6 @@ public class ErrorCodeUtil {
      * 通过参数获取error code的msg
      */
     public static String getMsgWithParams(IErrorCode codeEnum, Object... params) {
-        if (codeEnum == null) {
-            return null;
-        }
         String msg = codeEnum.getMsg();
         if (params == null || params.length == 0) {
             return msg;

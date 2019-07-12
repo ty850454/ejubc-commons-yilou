@@ -36,9 +36,6 @@ public final class DtoCopyUtil {
      * @date 2019年04月16日
      */
     public static <T> T copy(Object source, Class<T> target) {
-        Objects.requireNonNull(source, "source");
-        Objects.requireNonNull(target, "target");
-
         T newInstance = objenesisStdThreadLocal.get().newInstance(target);
         BeanCopier beanCopier = getCacheBeanCopier(source.getClass(), target);
         beanCopier.copy(source, newInstance, null);
@@ -62,8 +59,6 @@ public final class DtoCopyUtil {
      * @date 2019年04月16日
      */
     public static <T> List<T> copyList(List<?> sources, Class<T> target) {
-        Objects.requireNonNull(sources, "source");
-        Objects.requireNonNull(target, "target");
         if (sources.isEmpty()) {
             return Collections.emptyList();
         }

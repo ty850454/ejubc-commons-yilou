@@ -24,6 +24,8 @@ public enum SysErrorCode implements IErrorCode {
 
     SYS0030(SYSTEM, "0030", "上传文件过大"),
 
+    SYS0040(SYSTEM, "0040", "日期格式解析失败"),
+
     /** 1000-1999 参数异常（非业务参数异常） */
     SYS1000("1000","参数[{0}]不能为空"),
 
