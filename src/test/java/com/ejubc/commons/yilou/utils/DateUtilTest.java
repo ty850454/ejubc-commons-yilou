@@ -10,13 +10,13 @@ class DateUtilTest {
 
     @Test
     void formatDATE_CHINA() {
-        Date parse = DateUtil.DATE_CHINA.parse("2015年07月30日").orElseThrow(() -> new RuntimeException("日期转换异常"));
+        Date parse = DateUtil.DATE_CHINA_NO_ZERO.parseOrElseThrow("2015年7月1日");
         System.out.println(DateUtil.DATE.format(parse));
     }
 
     @Test
     void formatDATE() {
         Date parse = DateUtil.DATE.parse("2015-07-30").orElseThrow(() -> new RuntimeException("日期转换异常"));
-        System.out.println(DateUtil.DATE_CHINA.format(parse));
+        System.out.println(DateUtil.DATE_CHINA.format(null));
     }
 }
