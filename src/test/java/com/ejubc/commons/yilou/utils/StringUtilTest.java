@@ -18,4 +18,13 @@ public class StringUtilTest {
     public void substringToTopAndEnd() {
         System.out.println(Arrays.toString(StringUtil.substringToTopAndEnd("asdadasd.xxs", ".").orElse(new String[]{})));
     }
+
+
+    @Test
+    void sub1() {
+
+        System.out.println(StringUtil.sub("dasdsada,abcdefg.wada", ".", ","));
+
+
+    }
 }

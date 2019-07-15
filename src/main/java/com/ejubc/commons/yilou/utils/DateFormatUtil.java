@@ -9,6 +9,7 @@ import java.util.Date;
  * 日期格式化工具
  *
  * @author xy
+ * @see com.ejubc.commons.yilou.utils.DateUtil
  */
 @SuppressWarnings("unused")
 @Deprecated

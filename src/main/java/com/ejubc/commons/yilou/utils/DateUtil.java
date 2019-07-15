@@ -22,6 +22,7 @@ public class DateUtil {
     public static final DateUtil DATE_TIME = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"), DateType.DATE_TIME);
     public static final DateUtil DATE = new DateUtil(DateTimeFormatter.ofPattern("yyyy-MM-dd"), DateType.DATE);
     public static final DateUtil DATE_CHINA = new DateUtil(DateTimeFormatter.ofPattern("yyyy年MM月dd日"), DateType.DATE);
+    public static final DateUtil DATE_TIME_CHINA = new DateUtil(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH时mm分ss秒"), DateType.DATE);
     public static final DateUtil DATE_CHINA_NO_ZERO = new DateUtil(DateTimeFormatter.ofPattern("yyyy年M月d日"), DateType.DATE);
 
     private DateTimeFormatter dateTimeFormatter;
@@ -121,7 +122,7 @@ public class DateUtil {
      * 获取指定日期的结束时间
      */
     public static Date getTheDayEndTime(Date date) {
-        return toDate(toLocalDateTime(date).withHour(23).withMinute(59).withSecond(59).withNano(999_999_999));
+        return toDate(LocalDateTime.of(toLocalDate(date), LocalTime.MAX));
     }
 
     /**
@@ -132,10 +133,10 @@ public class DateUtil {
     }
 
     /**
-     * 获取今天开始时间
+     * 获取指定日期开始时间
      */
     public static Date getTheDayStartTime(Date date) {
-        return toDate(toLocalDateTime(date).withHour(0).withMinute(0).withSecond(0).withNano(0));
+        return toDate(toLocalDate(date).atStartOfDay());
     }
 
 
