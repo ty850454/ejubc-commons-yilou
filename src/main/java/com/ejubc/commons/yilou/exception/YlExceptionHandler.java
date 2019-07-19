@@ -4,6 +4,7 @@ import com.ejubc.commons.base.ApiResponse;
 import com.ejubc.commons.exception.BusinessException;
 import com.ejubc.commons.exception.BusinessExceptionUtils;
 import com.ejubc.commons.utils.LocalStringUtils;
+import com.ejubc.commons.yilou.enums.HttpCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,10 @@ public class YlExceptionHandler {
     @ExceptionHandler(YlCloudException.class)
     public ApiResponse handleYlCloudException(HttpServletRequest request, YlCloudException e) {
         log.error("远程服务[{}]异常: {}，URL：{}", e.getServiceName(), e.getMessage(), request.getRequestURI());
+
+        if (HttpCodeEnum.CODE_500.getCodeStr().equals(e.getCode())) {
+            return ErrorResponse.failure("远程服务[" + e.getServiceName() + "]异常：" + e.getMsg(), SysErrorCode.SYS0001);
+        }
         return new ErrorResponse(e.getCode(), e.getMsg(), "远程服务[" + e.getServiceName() + "]异常");
     }
 

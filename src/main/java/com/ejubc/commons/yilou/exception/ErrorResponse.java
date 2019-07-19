@@ -29,5 +29,9 @@ public class ErrorResponse<T> extends ApiResponse<T> {
         return new ErrorResponse<>(errorCode.getCode(), ErrorCodeUtil.getMsgWithParams(errorCode, params), null);
     }
 
+    public static <T> ErrorResponse<T> failure(String detail, IErrorCode errorCode, Object... params) {
+        return new ErrorResponse<>(errorCode.getCode(), ErrorCodeUtil.getMsgWithParams(errorCode, params), detail);
+    }
+
 
 }

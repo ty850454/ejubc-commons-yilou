@@ -45,7 +45,8 @@ public abstract class AbstractCloudService {
             }
             return Optional.empty();
         }
-        log.info("调用服务[{}]返回:{}", getServiceName(),JsonUtils.object2Json(apiResponse));
+        String json = JsonUtils.object2Json(apiResponse);
+        log.info("调用服务[{}]返回:{}", getServiceName(), json.length() > 200 ? json.substring(0, 200) : json);
         return Optional.ofNullable(apiResponse.getData());
     }
 
@@ -61,7 +62,8 @@ public abstract class AbstractCloudService {
         if (!apiResponse.isSuccess()) {
             throw new YlCloudException(getServiceName(), apiResponse.getResponseCode(), apiResponse.getResponseMsg());
         }
-        log.info("调用服务[{}]返回:{}", getServiceName(),JsonUtils.object2Json(apiResponse));
+        String json = JsonUtils.object2Json(apiResponse);
+        log.info("调用服务[{}]返回:{}", getServiceName(), json.length() > 200 ? json.substring(0, 200) : json);
         return Optional.ofNullable(apiResponse.getData());
     }
 
