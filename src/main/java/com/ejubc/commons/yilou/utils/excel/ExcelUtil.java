@@ -1,9 +1,11 @@
 package com.ejubc.commons.yilou.utils.excel;
 
+import com.ejubc.commons.yilou.exception.YlException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
  *
  * @author xy
  */
+@Slf4j
 public class ExcelUtil {
 
     private static final char CHAR_MIN = 'a';
@@ -39,11 +43,10 @@ public class ExcelUtil {
     public static <T> void outputToStream(String sheetName, OutputStream os, List<T> sources) {
 
         if (sources == null || sources.size() == 0 || sources.get(0) == null) {
-            throw new RuntimeException("请确保sources有值且第一个元素不为null");
+            throw new YlException(ExcelErrorCode.EXCEL01);
         }
-        if (os == null) {
-            throw new RuntimeException("请确保os不为null");
-        }
+        Objects.requireNonNull(os, "请确保os不为null");
+
         if (sheetName == null) {
             sheetName = "sheet1";
         }
@@ -73,7 +76,8 @@ public class ExcelUtil {
         try {
             sheets.write(os);
         } catch (IOException e) {
-            throw new RuntimeException("导出失败", e);
+            log.error("excel导出失败", e);
+            throw new YlException(ExcelErrorCode.EXCEL02);
         }
     }
 

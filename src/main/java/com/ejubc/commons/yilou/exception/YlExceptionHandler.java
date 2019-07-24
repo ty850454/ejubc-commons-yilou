@@ -60,7 +60,7 @@ public class YlExceptionHandler {
         log.error("远程服务[{}]异常: {}，URL：{}", e.getServiceName(), e.getMessage(), request.getRequestURI());
 
         if (HttpCodeEnum.CODE_500.getCodeStr().equals(e.getCode())) {
-            return ErrorResponse.failure("远程服务[" + e.getServiceName() + "]异常：" + e.getMsg(), SysErrorCode.SYS0001);
+            return ErrorResponse.failure("远程服务[" + e.getServiceName() + "]异常：" + e.getMsg(), SysErrorCode.SYS0001, e.getCode());
         }
         return new ErrorResponse(e.getCode(), e.getMsg(), "远程服务[" + e.getServiceName() + "]异常");
     }
