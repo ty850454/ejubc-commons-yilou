@@ -46,7 +46,7 @@ public abstract class AbstractCloudService {
             return Optional.empty();
         }
         String json = JsonUtils.object2Json(apiResponse);
-        log.info("调用服务[{}]返回:{}", getServiceName(), json.length() > 200 ? json.substring(0, 200) : json);
+        log.info("调用服务[{}]返回:{}", getServiceName(), json.length() > 500 ? json.substring(0, 500) : json);
         return Optional.ofNullable(apiResponse.getData());
     }
 

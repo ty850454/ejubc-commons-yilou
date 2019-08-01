@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ControllerAdvice
 @Slf4j
-public class YlExceptionHandler {
+public class BaseYlExceptionHandler {
 
     /**
      * 处理spring mvc 入参绑定异常
@@ -79,14 +79,13 @@ public class YlExceptionHandler {
             params = new String[]{codeEnum.getCode()};
             codeEnum = SysErrorCode.SYS0001;
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            log.error("系统异常: {}，URL：{}", e.getMessage(), request.getRequestURI(), e);
+            log.error("系统异常: {}，detail: {}, URL：{}", e.getMessage(), detail, request.getRequestURI(), e);
             if (detail == null) {
                 detail = e.getMessage();
             }
         } else {
-            log.info("业务异常: {}，URL：{}", e.getMessage(), request.getRequestURI());
+            log.info("业务异常: {}，detail: {}，URL：{}", e.getMessage(), detail, request.getRequestURI());
         }
-
 
         ApiResponse apiResponse = buildingResponseErrorCodeEnum(codeEnum, detail, params);
         apiResponse.setResponseCode(e.getCodeEnum().getCode());

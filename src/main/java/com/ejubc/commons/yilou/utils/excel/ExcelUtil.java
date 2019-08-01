@@ -40,7 +40,7 @@ public class ExcelUtil {
      * @param <T> 类型
      */
     @SuppressWarnings("unused")
-    public static <T> void outputToStream(String sheetName, OutputStream os, List<T> sources) {
+    public static void outputToStream(String sheetName, OutputStream os, List<?> sources) {
 
         if (sources == null || sources.size() == 0 || sources.get(0) == null) {
             throw new YlException(ExcelErrorCode.EXCEL01);
