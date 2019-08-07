@@ -37,6 +37,13 @@ public class DateUtil {
         return dateTimeFormatter.format(date.toInstant());
     }
 
+    public String nullSafeFormat(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return format(date);
+    }
+
     public Optional<Date> parse(String date) {
         try {
             switch (type) {
