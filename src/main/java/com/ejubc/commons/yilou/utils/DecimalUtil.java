@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class DecimalUtil {
 
-    public String toFixed(BigDecimal bigDecimal, int scale) {
+    public static String toFixed(BigDecimal bigDecimal, int scale) {
         if (bigDecimal == null) {
             return null;
         }
