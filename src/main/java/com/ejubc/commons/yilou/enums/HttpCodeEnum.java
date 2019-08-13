@@ -13,6 +13,7 @@ import lombok.Getter;
 public enum HttpCodeEnum {
     /** 500 */
     CODE_500("500", 500),
+    CODE_405("405", 405),
 
     ;
 

@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -51,6 +53,8 @@ public class BaseYlExceptionHandler {
         return buildingResponseByBindingResult(e.getBindingResult());
     }
 
+
+    private static final List<String> SYSTEM_ERROR_CODE = Arrays.asList("401", "402", "405", "500");
     /**
      * 处理mgt自定义异常
      */
@@ -59,10 +63,11 @@ public class BaseYlExceptionHandler {
     public ApiResponse handleYlCloudException(HttpServletRequest request, YlCloudException e) {
         log.error("远程服务[{}]异常: {}，URL：{}", e.getServiceName(), e.getMessage(), request.getRequestURI());
 
-        if (HttpCodeEnum.CODE_500.getCodeStr().equals(e.getCode())) {
-            return ErrorResponse.failure("远程服务[" + e.getServiceName() + "]异常：" + e.getMsg(), SysErrorCode.SYS0001, e.getCode());
+        if (SYSTEM_ERROR_CODE.contains(e.getCode())) {
+            return ErrorResponse.failure("服务[" + e.getServiceName() + "]异常：" + e.getMsg(), SysErrorCode.SYS0001, e.getServiceName() + e.getCode());
         }
-        return new ErrorResponse(e.getCode(), e.getMsg(), "远程服务[" + e.getServiceName() + "]异常");
+
+        return new ErrorResponse(e.getCode(), e.getMsg(), "服务[" + e.getServiceName() + "]异常");
     }
 
     /**
