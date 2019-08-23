@@ -1,6 +1,7 @@
 package com.ejubc.commons.yilou.component;
 
 
+import com.ejubc.commons.yilou.IProcess;
 import com.ejubc.commons.yilou.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisStringCommands;
@@ -19,7 +20,7 @@ import java.util.Optional;
  */
 @Component
 @Slf4j
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class RedisLock {
 
     /** 默认每隔200ms尝试一次去获取锁 */
@@ -44,6 +45,7 @@ public class RedisLock {
      * @return 成功失败
      */
     public boolean tryLock(String key, Long timeout, Long tryInterval, Long lockExpireTime) {
+        log.debug("获取锁,key={}", key);
         if (StringUtil.isEmpty(key)) {
             return false;
         }
@@ -65,9 +67,39 @@ public class RedisLock {
                 Thread.sleep(tryInterval);
             }
         } catch (InterruptedException e) {
-            log.error(e.getMessage());
+            log.error("获取锁失败,key={}", key, e);
         }
         return false;
+    }
+
+    /**
+     * 获取锁，自动释放锁
+     *
+     * @param key 锁的名称KEY
+     * @param timeout 累计获取锁的总时间达到多少后不再尝试，即超时时间（单位毫秒，默认3秒）
+     * @param tryInterval 每隔多少时间重新尝试一次获取（单位毫秒，默认200毫秒）
+     * @param lockExpireTime 获取锁成功后，锁的过期时间（单位毫秒，默认30秒）
+     * @param iProcess 回调，如果不是null，则执行iProcess.process();后自动释放锁
+     * @return 成功失败
+     */
+    public boolean tryLock(String key, Long timeout, Long tryInterval, Long lockExpireTime, IProcess iProcess) {
+        if (iProcess == null) {
+            return tryLock(key, timeout, tryInterval, lockExpireTime);
+        }
+        boolean result = false;
+        try {
+            result = tryLock(key, timeout, tryInterval, lockExpireTime);
+            if (result) {
+                iProcess.process();
+            }
+        } catch (Exception e) {
+            log.error("获取锁执行回调失败,key={}",key, e);
+        } finally {
+            if (result) {
+                unLock(key);
+            }
+        }
+        return result;
     }
 
     /**

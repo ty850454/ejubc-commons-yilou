@@ -7,7 +7,7 @@ import java.util.List;
 public class ListUtil {
 
 
-    public static  <T> List<List<T>> splitList(List<T> list, int len) {
+    public static <T> List<List<T>> splitList(List<T> list, int len) {
         if (list == null || list.isEmpty() || len < 1) {
             return Collections.emptyList();
         }
