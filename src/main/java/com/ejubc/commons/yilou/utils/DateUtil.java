@@ -34,9 +34,13 @@ public class DateUtil {
     }
 
     public String format(Date date) {
+        if (date == null) {
+            return null;
+        }
         return dateTimeFormatter.format(date.toInstant());
     }
 
+    @Deprecated
     public String nullSafeFormat(Date date) {
         if (date == null) {
             return null;
