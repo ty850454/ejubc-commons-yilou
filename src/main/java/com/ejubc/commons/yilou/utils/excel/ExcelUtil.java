@@ -1,5 +1,6 @@
 package com.ejubc.commons.yilou.utils.excel;
 
+import com.ejubc.commons.yilou.enums.ExcelErrorCode;
 import com.ejubc.commons.yilou.exception.YlException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,7 +38,6 @@ public class ExcelUtil {
      * @param sheetName sheet页名
      * @param os 输出流
      * @param sources 源数据，需要导出的字段加{@link ExcelColumn}注解
-     * @param <T> 类型
      */
     @SuppressWarnings("unused")
     public static void outputToStream(String sheetName, OutputStream os, List<?> sources) {

@@ -1,6 +1,6 @@
 package com.ejubc.commons.yilou.utils;
 
-import com.ejubc.commons.yilou.exception.SysErrorCode;
+import com.ejubc.commons.yilou.enums.SysErrorCode;
 import com.ejubc.commons.yilou.exception.YlException;
 
 import java.time.LocalDate;

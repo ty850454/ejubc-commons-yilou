@@ -2,7 +2,7 @@ package com.ejubc.commons.yilou.base;
 
 import com.ejubc.commons.base.ApiResponse;
 import com.ejubc.commons.utils.JsonUtils;
-import com.ejubc.commons.yilou.exception.SysErrorCode;
+import com.ejubc.commons.yilou.enums.SysErrorCode;
 import com.ejubc.commons.yilou.exception.YlCloudException;
 import com.ejubc.commons.yilou.exception.YlException;
 import lombok.extern.slf4j.Slf4j;

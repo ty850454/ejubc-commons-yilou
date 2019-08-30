@@ -1,10 +1,8 @@
-package com.ejubc.commons.yilou.utils.excel;
+package com.ejubc.commons.yilou.enums;
 
-import com.ejubc.commons.yilou.exception.ErrorScope;
+import com.ejubc.commons.yilou.enums.ErrorScope;
 import com.ejubc.commons.yilou.exception.IErrorCode;
 import lombok.Getter;
-
-import static com.ejubc.commons.yilou.exception.ErrorScope.SYSTEM;
 
 /**
  * <p>易楼项目异常码枚举</p>

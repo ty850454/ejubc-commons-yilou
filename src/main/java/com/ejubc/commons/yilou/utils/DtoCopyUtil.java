@@ -1,6 +1,6 @@
 package com.ejubc.commons.yilou.utils;
 
-import com.ejubc.commons.yilou.exception.SysErrorCode;
+import com.ejubc.commons.yilou.enums.SysErrorCode;
 import com.ejubc.commons.yilou.exception.YlException;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.objenesis.ObjenesisStd;
@@ -8,7 +8,6 @@ import org.springframework.objenesis.ObjenesisStd;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**

@@ -2,8 +2,8 @@ package com.ejubc.commons.yilou.component;
 
 
 import com.ejubc.commons.yilou.IProcess;
-import com.ejubc.commons.yilou.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,11 +24,11 @@ import java.util.Optional;
 public class RedisLock {
 
     /** 默认每隔200ms尝试一次去获取锁 */
-    private final static long LOCK_TRY_INTERVAL = 200L;
+    private final static long LOCK_TRY_INTERVAL = 200;
     /** 默认累计尝试时间达到3秒后，不在尝试 */
-    private final static long LOCK_TRY_TIMEOUT = 3 * 1000L;
+    private final static long LOCK_TRY_TIMEOUT = 3;
     /** 默认锁在30秒后自动失效，释放锁 */
-    private final static long LOCK_EXPIRE_TIME = 30 * 1000L;
+    private final static long LOCK_EXPIRE_TIME = 30;
 
     private StringRedisTemplate template;
     public RedisLock(StringRedisTemplate template) {
@@ -46,7 +46,7 @@ public class RedisLock {
      */
     public boolean tryLock(String key, Long timeout, Long tryInterval, Long lockExpireTime) {
         log.debug("获取锁,key={}", key);
-        if (StringUtil.isEmpty(key)) {
+        if (StringUtils.isEmpty(key)) {
             return false;
         }
         if (timeout == null) {
@@ -66,6 +66,7 @@ public class RedisLock {
                 }
                 Thread.sleep(tryInterval);
             }
+            return true;
         } catch (InterruptedException e) {
             log.error("获取锁失败,key={}", key, e);
         }
@@ -94,12 +95,24 @@ public class RedisLock {
             }
         } catch (Exception e) {
             log.error("获取锁执行回调失败,key={}",key, e);
+            throw e;
         } finally {
             if (result) {
                 unLock(key);
             }
         }
         return result;
+    }
+
+    /**
+     * 获取锁，自动释放锁
+     *
+     * @param key 锁的名称KEY
+     * @param iProcess 回调，如果不是null，则执行iProcess.process();后自动释放锁
+     * @return 成功失败
+     */
+    public boolean tryLock(String key, IProcess iProcess) {
+        return tryLock(key, LOCK_TRY_TIMEOUT, LOCK_TRY_INTERVAL, LOCK_EXPIRE_TIME, iProcess);
     }
 
     /**
@@ -110,7 +123,7 @@ public class RedisLock {
      * @return 成功失败
      */
     public boolean lock(String key, Long lockExpireTime) {
-        if (StringUtil.isEmpty(key)) {
+        if (StringUtils.isEmpty(key)) {
             return false;
         }
         return coreLock(key, lockExpireTime != null ? lockExpireTime : LOCK_EXPIRE_TIME);
@@ -138,7 +151,7 @@ public class RedisLock {
      * @param key 锁的名称KEY
      */
     public void unLock(String key) {
-        if (StringUtil.isEmpty(key)) {
+        if (StringUtils.isEmpty(key)) {
             return;
         }
         if (Optional.ofNullable(template.hasKey(key)).orElse(false)) {

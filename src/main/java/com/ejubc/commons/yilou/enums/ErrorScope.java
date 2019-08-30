@@ -1,4 +1,4 @@
-package com.ejubc.commons.yilou.exception;
+package com.ejubc.commons.yilou.enums;
 
 /**
  * 异常影响范围

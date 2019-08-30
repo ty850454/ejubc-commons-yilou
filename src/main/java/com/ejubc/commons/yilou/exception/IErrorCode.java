@@ -1,5 +1,7 @@
 package com.ejubc.commons.yilou.exception;
 
+import com.ejubc.commons.yilou.enums.ErrorScope;
+
 /**
  * 异常枚举接口
  * @author xy
