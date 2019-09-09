@@ -1,6 +1,5 @@
 package com.ejubc.commons.yilou.utils;
 
-import com.ejubc.commons.utils.LocalStringUtils;
 import com.ejubc.commons.yilou.exception.IErrorCode;
 
 /**
