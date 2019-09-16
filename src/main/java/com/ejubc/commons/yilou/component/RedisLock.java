@@ -2,6 +2,8 @@ package com.ejubc.commons.yilou.component;
 
 
 import com.ejubc.commons.yilou.IProcess;
+import com.ejubc.commons.yilou.enums.SysErrorCode;
+import com.ejubc.commons.yilou.exception.YlException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisStringCommands;
@@ -18,6 +20,11 @@ import java.util.Collections;
 
 /**
  * Redis分布式锁
+ *
+ * 支持限制同一个lock对象加锁解锁
+ * 支持自旋
+ * 支持获取锁超时
+ * 支持自动解锁
  *
  * @author xuyang
  */
@@ -152,7 +159,7 @@ public class RedisLock {
     /**
      * 释放锁
      *
-     * @param lock 锁
+     * @param lock 锁，必须是加锁时使用的lock，否则无法解锁
      */
     public void unLock(Lock lock) {
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end ";
@@ -161,12 +168,16 @@ public class RedisLock {
         redisScript.setScriptText(script);
         redisScript.setResultType(Long.class);
         try {
-            template.execute(redisScript, Collections.singletonList(lock.getKey()), lock.getValue());
-            log.info("释放锁成功的服务器ip为"+ InetAddress.getLocalHost().getHostAddress());
+            Long execute = template.execute(redisScript, Collections.singletonList(lock.getKey()), lock.getValue());
+            if (execute == null || execute == 0) {
+                throw new YlException(SysErrorCode.SYS0002);
+            } else {
+                log.info("锁释放成功,ip={}", InetAddress.getLocalHost().getHostAddress());
+            }
         } catch (UnknownHostException e) {
             log.warn("获取host异常:{}", e.getMessage(), e);
         } catch (Exception e) {
-            log.error("锁释放错误信息：" + e.getMessage(), e);
+            log.error("锁释放错误:{}", e.getMessage(), e);
         }
     }
 
