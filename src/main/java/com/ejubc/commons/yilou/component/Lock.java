@@ -2,7 +2,6 @@ package com.ejubc.commons.yilou.component;
 
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 
@@ -10,7 +9,6 @@ import java.util.UUID;
  * 锁
  * @author xy
  */
-@Setter
 @Getter
 public class Lock {
 

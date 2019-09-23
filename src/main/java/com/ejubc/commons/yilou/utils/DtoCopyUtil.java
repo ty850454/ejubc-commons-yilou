@@ -3,6 +3,7 @@ package com.ejubc.commons.yilou.utils;
 import com.ejubc.commons.yilou.enums.SysErrorCode;
 import com.ejubc.commons.yilou.exception.YlException;
 import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.cglib.core.Converter;
 import org.springframework.objenesis.ObjenesisStd;
 
 import java.util.ArrayList;

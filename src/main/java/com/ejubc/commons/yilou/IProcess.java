@@ -5,7 +5,6 @@ public interface IProcess {
 
     /**
      * 业务处理逻辑
-     * @return T
      */
-    <T> T process();
+    void process();
 }
