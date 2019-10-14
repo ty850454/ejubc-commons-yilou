@@ -71,8 +71,8 @@ public class ListUtil {
 
      * 这两个集合类型可以不一致，所以需要一个算法计算两个集合中的元素是否一致。
      *
-     * @param newCollection 新的集合，集合N(new)，null安全
-     * @param oldCollection 老的集合，集合O(old)，null安全
+     * @param newCollection 新的集合，集合N(new)，null安全，忽略集合中的null
+     * @param oldCollection 老的集合，集合O(old)，null安全，忽略集合中的null
      * @param comparator 计算元素是否一致，不可为null
      * @param <N> 新集合元素类型
      * @param <O> 老集合元素类型
@@ -97,8 +97,11 @@ public class ListUtil {
 
 
         x:for (N n : newCollection) {
+            if (n == null) {
+                continue;
+            }
             for (O o : oldCollection) {
-                if (comparator.compare(n, o)) {
+                if (o != null && comparator.compare(n, o)) {
                     // 需要更新
                     needUpdate.add(new SimilarNeedUpdateResult<>(n, o));
                     needDelete.remove(o);

@@ -21,7 +21,6 @@
             <groupId>com.ejubc.commons</groupId>
             <artifactId>commons-base</artifactId>
             <version>0.0.4-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
