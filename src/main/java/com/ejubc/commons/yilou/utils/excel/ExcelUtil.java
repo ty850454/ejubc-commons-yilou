@@ -109,12 +109,14 @@ public class ExcelUtil {
         private Field field;
         private Method m;
         private String title;
-        private int index;
     }
 
     private static ExcelColumnDefine[] getExcelColumnDefine(Class<?> clazz) {
-        List<ExcelColumnDefine> excelColumnDefinesList = new ArrayList<>();
-        for (Field field : clazz.getDeclaredFields()) {
+        Field[] fields = clazz.getDeclaredFields();
+        ExcelColumnDefine[] excelColumnDefinesList = new ExcelColumnDefine[fields.length];
+
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
             ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
             if (annotation == null) {
                 continue;
@@ -122,27 +124,15 @@ public class ExcelUtil {
             String name = field.getName();
             try {
                 Method m = clazz.getMethod("get" + initialCapital(name));
-                if (m != null) {
-                    excelColumnDefinesList.add(new ExcelColumnDefine(annotation, field, m, annotation.title(), annotation.index()));
+                if (m == null) {
+                    throw new RuntimeException("字段["+ name + "]无get方法");
                 }
+                excelColumnDefinesList[i] = new ExcelColumnDefine(annotation, field, m, annotation.title());
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }
-
-        ExcelColumnDefine[] excelColumnDefines = new ExcelColumnDefine[excelColumnDefinesList.size()];
-        for (ExcelColumnDefine define : excelColumnDefinesList) {
-            ExcelColumn annotation = define.getAnnotation();
-            if (annotation.index() < 0 || annotation.index() >= excelColumnDefines.length) {
-                throw new RuntimeException("字段[" + define.getField().getName() + "]索引[" + annotation.index() + "]无效，有效范围：0-" + (excelColumnDefines.length - 1));
-            }
-            if (excelColumnDefines[annotation.index()] != null) {
-                throw new RuntimeException("字段["+ define.getField().getName() + "]的索引与字段[" + excelColumnDefines[annotation.index()].getField().getName() + "]重复，重复索引[" + annotation.index() + "]");
-            }
-            excelColumnDefines[annotation.index()] = define;
-        }
-
-        return excelColumnDefines;
+        return excelColumnDefinesList;
     }
 
     private static String[][] getContext(List<?> sources, ExcelColumnDefine[] excelColumnDefines) {

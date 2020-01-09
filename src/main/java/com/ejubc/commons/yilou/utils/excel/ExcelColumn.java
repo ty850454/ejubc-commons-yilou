@@ -19,9 +19,4 @@ public @interface ExcelColumn {
      */
     String title();
 
-    /**
-     * @return 列的索引，从0开始
-     */
-    int index();
-
 }
